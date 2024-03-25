@@ -7,25 +7,22 @@
 
 #include "Ping.hpp"
 
+#include "../internal/llnetinternallib.hpp"
+
+#include "../internal/WSAController.hpp"
+
+#include <utility>
+
 #if defined(WINDOWS_SYSTEM)
-#include <stdlib.h>
-#include <string.h>
-#include <winsock2.h>
-#include <ws2tcpip.h>
-#include <iphlpapi.h>
-#include <icmpapi.h>
+    #pragma warning(push)
+    #pragma warning(disable:4820) // ignore a warning of winsock (not my problem
 
-#pragma comment(lib, "ws2_32.lib")
-#pragma comment(lib, "iphlpapi.lib")
-
-#elif defined(__unix__)
-#include <unistd.h>
-#include <sys/types.h> 
-#include <sys/socket.h>
-#include <netinet/in.h>
-#define IS_INVALID_SOCKET(s) (s > 0)
-#define CLOSE_SOCKET(s) close(s)
-#endif
+    #include <iphlpapi.h>
+    #include <icmpapi.h>
+    #pragma comment(lib, "iphlpapi.lib")
+	#pragma warning(pop)
+    #pragma warning(disable:4996) // insecure function
+#endif // WINDOWS_SYSTEM
 
 namespace llcpp {
 namespace net {
@@ -39,51 +36,43 @@ constexpr b64 PACKET_SIZE = 32;
 constexpr b64 REPLY_SIZE = sizeof(ICMP_ECHO_REPLY) + PACKET_SIZE + 8;
 
 
-void Ping::move(Ping&& other) {
+void Ping::move(Ping&& other) __LL_EXCEPT__ {
     this->ip = other.ip;
     this->icmp_handle = other.icmp_handle;
-    this->wsaData = other.wsaData;
     // reply buffer no need to move
 
     other.ip = LL_NULLPTR;
     other.icmp_handle = LL_NULLPTR;
-    other.wsaData = LL_NULLPTR;
     if (other.reply_buffer) free(other.reply_buffer);
 }
 
-Ping::Ping()
+Ping::Ping() __LL_EXCEPT__
     : ip(LL_NULLPTR)
     , icmp_handle(LL_NULLPTR)
     , reply_buffer(calloc(REPLY_SIZE, 1))
-    , wsaData(LL_NULLPTR)
 {}
-Ping::Ping(ll_string_t ip) : Ping() {
+Ping::Ping(ll_string_t ip) __LL_EXCEPT__ : Ping() {
     this->ip = ip;
     this->icmp_handle = IcmpCreateFile();
-    this->wsaData = new WSAData();
-    WSAStartup(MAKEWORD(2, 2), this->wsaData);	// Request os to let open ports
+
+    WSAController::getInstance();
 }
-Ping::Ping(Ping&& other) : Ping() { this->move(std::move(other)); }
-Ping& Ping::operator=(Ping&& other) noexcept { this->move(std::move(other)); return *this; }
-Ping::~Ping() {
+
+Ping::Ping(Ping&& other) __LL_EXCEPT__ : Ping() { this->move(std::move(other)); }
+Ping& Ping::operator=(Ping&& other) __LL_EXCEPT__ { this->move(std::move(other)); return *this; }
+Ping::~Ping() __LL_EXCEPT__ {
     if(this->icmp_handle) IcmpCloseHandle(this->icmp_handle);
     if(this->reply_buffer) free(this->reply_buffer);
 
     this->icmp_handle = INVALID_HANDLE_VALUE;
     this->reply_buffer = LL_NULLPTR;
     this->ip = LL_NULLPTR;
-
-    if (this->wsaData != LL_NULLPTR) {
-        WSACleanup();
-        delete this->wsaData;
-        this->wsaData = LL_NULLPTR;
-    }
 }
 
-ll_bool_t Ping::isValidSocket() const { return this->icmp_handle != INVALID_HANDLE_VALUE; }
-b64 Ping::replySize() const { return REPLY_SIZE; }
+ll_bool_t Ping::isValidSocket() const __LL_EXCEPT__ { return this->icmp_handle != INVALID_HANDLE_VALUE; }
+b64 Ping::replySize() const __LL_EXCEPT__ { return REPLY_SIZE; }
 
-PingResult Ping::ping(const ui64 timeout) {
+PingResult Ping::ping(const ui64 timeout) __LL_EXCEPT__ {
     PingResult result = {};
 
     if (IcmpSendEcho(

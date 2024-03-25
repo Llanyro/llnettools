@@ -68,31 +68,33 @@ enum class ProtocolType {
 	IRDA         = 26,              // IrDA
 	NETDES       = 28,              // Network Designers OSI & gateway
 
-#if(_WIN32_WINNT < 0x0501)
-	MAX          = 29,
-#else //(_WIN32_WINNT < 0x0501)
+#if defined(_WIN32_WINNT)
+	#if (_WIN32_WINNT < 0x0501)
+		MAX          = 29,
+	#else //(_WIN32_WINNT < 0x0501)
 
-	TCNPROCESS   = 29,
-	TCNMESSAGE   = 30,
-	ICLFXBM      = 31,
+		TCNPROCESS   = 29,
+		TCNMESSAGE   = 30,
+		ICLFXBM      = 31,
 
-# if(_WIN32_WINNT < 0x0600)
-	MAX          = 32,
-# else //(_WIN32_WINNT < 0x0600)
-	BTH          = 32,              // Bluetooth RFCOMM/L2CAP protocols
-#  if(_WIN32_WINNT < 0x0601)
-	MAX          = 33,
-#  else //(_WIN32_WINNT < 0x0601)
-	LINK         = 33,
-#   if(_WIN32_WINNT < 0x0604)
-	MAX          = 34,
-#   else //(_WIN32_WINNT < 0x0604)
-	HYPERV       = 34,
-	MAX          = 35,
-#   endif //(_WIN32_WINNT < 0x0604)
-#  endif //(_WIN32_WINNT < 0x0601)
-# endif //(_WIN32_WINNT < 0x0600)
-#endif //(_WIN32_WINNT < 0x0501)
+	# if(_WIN32_WINNT < 0x0600)
+		MAX          = 32,
+	# else //(_WIN32_WINNT < 0x0600)
+		BTH          = 32,              // Bluetooth RFCOMM/L2CAP protocols
+	#  if(_WIN32_WINNT < 0x0601)
+		MAX          = 33,
+	#  else //(_WIN32_WINNT < 0x0601)
+		LINK         = 33,
+	#   if(_WIN32_WINNT < 0x0604)
+		MAX          = 34,
+	#   else //(_WIN32_WINNT < 0x0604)
+		HYPERV       = 34,
+		MAX          = 35,
+	#   endif //(_WIN32_WINNT < 0x0604)
+	#  endif //(_WIN32_WINNT < 0x0601)
+	# endif //(_WIN32_WINNT < 0x0600)
+	#endif //(_WIN32_WINNT < 0x0501)
+#endif // _WIN32_WINNT
 	Unknown
 };
 enum class NetType {

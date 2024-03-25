@@ -25,7 +25,7 @@ namespace tcp {
 
 namespace client {
 
-class Socket : public TCPSocketBase {
+class LL_SHARED_LIB Socket : public TCPSocketBase {
 	public:
 		enum class LastError {
 			Ok,
@@ -57,7 +57,7 @@ class Socket : public TCPSocketBase {
 } // namespace client
 namespace server {
 
-class Socket : public TCPSocketBase {
+class LL_SHARED_LIB Socket : public TCPSocketBase {
 	public:
 		Socket(const ui16 port) __LL_EXCEPT__;
 		~Socket() __LL_EXCEPT__;

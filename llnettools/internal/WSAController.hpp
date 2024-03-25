@@ -29,12 +29,12 @@ struct WSAData;
 namespace llcpp {
 namespace net {
 
-class WSAController : public singleton::static_::Singleton<WSAController> {
+class LL_SHARED_LIB WSAController : public singleton::static_::Singleton<WSAController> {
 	private:
 		WSAData* wsaData;
 	private:
 		#pragma region Singleton
-		friend class Singleton<WSAController>;
+		friend class singleton::static_::Singleton<WSAController>;
 		WSAController();
 		~WSAController();
 		#pragma endregion

@@ -59,7 +59,7 @@ Socket& Socket::operator=(Socket&& other) __LL_EXCEPT__ {
 }
 
 
-ll_bool_t Socket::isValidSocket() const { return IS_INVALID_SOCKET(this->sock); }
+ll_bool_t Socket::isValidSocket() const __LL_EXCEPT__ { return IS_INVALID_SOCKET(this->sock); }
 
 i32 Socket::writeBytes(const ll_char_t* bytes, const len_t length) const __LL_EXCEPT__ {
 	return send(this->sock, bytes, length, 0);
@@ -71,7 +71,7 @@ i32 Socket::readBytes(ll_char_t* bytes, const len_t bytesToRead) const __LL_EXCE
 	return recv(this->sock, bytes, bytesToRead, 0);
 }
 
-void Socket::closeSocket() {
+void Socket::closeSocket() __LL_EXCEPT__ {
 	if (this->isValidSocket()) {
 		CLOSE_SOCKET(this->sock);
 		this->sock = INVALID_SOCKET;
@@ -81,7 +81,7 @@ void Socket::closeSocket() {
 		this->addr = LL_NULLPTR;
 	}
 }
-void Socket::clear() {
+void Socket::clear() __LL_EXCEPT__ {
 	if (this->isValidSocket()) {
 		CLOSE_SOCKET(this->sock);
 		this->sock = INVALID_SOCKET;
@@ -92,7 +92,7 @@ void Socket::clear() {
 		this->addr = LL_NULLPTR;
 	}
 }
-void Socket::reset(const ProtocolType protocol_type, const NetType net_type) {
+void Socket::reset(const ProtocolType protocol_type, const NetType net_type) __LL_EXCEPT__ {
 	this->clear();
 	this->initSocket(protocol_type, net_type);
 }

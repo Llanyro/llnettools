@@ -18,8 +18,13 @@
 #define LLANYLIB_NETTOOLS_NETINTERNALLIB_MINOR_ 0
 
 #if defined(WINDOWS_SYSTEM)
+	#pragma warning(push)
+	#pragma warning(disable:4820) // ignore a warning of winsock (not my problem
+	#pragma warning(disable:4668) // ignore a warning of winsock (not my problem
 	#include <winsock2.h>
 	#include <Ws2tcpip.h>
+	#pragma warning(pop)
+
 	#define IS_INVALID_SOCKET(s) (s != INVALID_SOCKET)
 	#define CLOSE_SOCKET(s) closesocket(s)
 	#pragma comment(lib, "Ws2_32.lib") // #pragma comment(lib, "ws2_32.lib")

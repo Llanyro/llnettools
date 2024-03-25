@@ -17,13 +17,14 @@
 #define LLANYLIB_NETTOOLS_UDPSOCKETBASE_MAYOR_ 1
 #define LLANYLIB_NETTOOLS_UDPSOCKETBASE_MINOR_ 0
 
+#include <llanylib/definitions.hpp>
 #include "../internal/Socket.hpp"
 
 namespace llcpp {
 namespace net {
 namespace udp {
 
-class UDPSocketBase : public Socket {
+class LL_SHARED_LIB UDPSocketBase : public Socket {
     public:
 		UDPSocketBase(const ui16 port) __LL_EXCEPT__;
 		/*
@@ -40,7 +41,7 @@ class UDPSocketBase : public Socket {
 		UDPSocketBase(UDPSocketBase&& other) __LL_EXCEPT__;
 		UDPSocketBase& operator=(UDPSocketBase&& other) __LL_EXCEPT__;
 
-		ui16 getPort() const;
+		ui16 getPort() const __LL_EXCEPT__;
 };
 
 } // namespace udp

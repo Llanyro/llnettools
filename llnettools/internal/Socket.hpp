@@ -22,7 +22,7 @@
 namespace llcpp {
 namespace net {
 
-class Socket {
+class LL_SHARED_LIB Socket {
     protected:
 		ll_socket_t sock;
 		sockaddr_in* addr;

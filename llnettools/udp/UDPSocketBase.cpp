@@ -17,20 +17,23 @@ namespace llcpp {
 namespace net {
 namespace udp {
 
-UDPSocketBase::UDPSocketBase(const ui16 port) : Socket(ProtocolType::INET, NetType::DGRAM, LL_NULLPTR) {
+UDPSocketBase::UDPSocketBase(const ui16 port) __LL_EXCEPT__
+	: Socket(ProtocolType::INET, NetType::DGRAM, LL_NULLPTR) {
 	//this->addr->sin_family = AF_INET;
 	this->addr->sin_addr.s_addr = INADDR_ANY;
 	this->addr->sin_port = htons(port);
 }
-UDPSocketBase::UDPSocketBase(const ll_socket_t sock, sockaddr_in* addr) : Socket(sock, addr) {}
-UDPSocketBase::UDPSocketBase(UDPSocketBase&& other) : Socket(std::move(other)) {}
-UDPSocketBase& UDPSocketBase::operator=(UDPSocketBase&& other) noexcept {
+UDPSocketBase::UDPSocketBase(const ll_socket_t sock, sockaddr_in* addr) __LL_EXCEPT__
+	: Socket(sock, addr) {}
+UDPSocketBase::UDPSocketBase(UDPSocketBase&& other) __LL_EXCEPT__
+	: Socket(std::move(other)) {}
+UDPSocketBase& UDPSocketBase::operator=(UDPSocketBase&& other) __LL_EXCEPT__ {
 	Socket::operator=(std::move(other));
 	return *this;
 }
-UDPSocketBase::~UDPSocketBase() {}
+UDPSocketBase::~UDPSocketBase() __LL_EXCEPT__ {}
 
-ui16 UDPSocketBase::getPort() const { return ntohs(this->addr->sin_port); }
+ui16 UDPSocketBase::getPort() const __LL_EXCEPT__ { return ntohs(this->addr->sin_port); }
 
 } // namespace udp
 } // namespace net

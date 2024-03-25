@@ -17,13 +17,14 @@
 #define LLANYLIB_NETTOOLS_TCPSOCKETBASE_MAYOR_ 1
 #define LLANYLIB_NETTOOLS_TCPSOCKETBASE_MINOR_ 0
 
+#include <llanylib/definitions.hpp>
 #include "../internal/Socket.hpp"
 
 namespace llcpp {
 namespace net {
 namespace tcp {
 
-class TCPSocketBase : public Socket {
+class LL_SHARED_LIB TCPSocketBase : public Socket {
     public:
 		TCPSocketBase(const ui16 port) __LL_EXCEPT__;
 		/*
@@ -32,15 +33,15 @@ class TCPSocketBase : public Socket {
 		*	Just let use this socket to to read/write bytes
 		*/
 		TCPSocketBase(const ll_socket_t sock, sockaddr_in* addr) __LL_EXCEPT__;
-		~TCPSocketBase();
+		~TCPSocketBase() __LL_EXCEPT__;
 
 		TCPSocketBase(const TCPSocketBase& other) __LL_EXCEPT__ = delete;
 		TCPSocketBase& operator=(const TCPSocketBase& other) __LL_EXCEPT__ = delete;
 
-		TCPSocketBase(TCPSocketBase&& other);
+		TCPSocketBase(TCPSocketBase&& other) __LL_EXCEPT__;
 		TCPSocketBase& operator=(TCPSocketBase&& other) __LL_EXCEPT__;
 
-		ui16 getPort() const;
+		ui16 getPort() const __LL_EXCEPT__;
 };
 
 } // namespace tcp
