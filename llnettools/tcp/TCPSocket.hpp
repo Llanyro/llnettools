@@ -82,4 +82,4 @@ using ClientSocket = llcpp::net::tcp::client::Socket;
 } // namespace net
 } // namespace llcpp
 
-#endif /* LLCPP_NET_TCP_TCPSOCKET_HPP_ */
+#endif // LLCPP_NET_TCP_TCPSOCKET_HPP_
