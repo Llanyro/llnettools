@@ -58,6 +58,13 @@ class LL_SHARED_LIB Socket : public TCPSocketBase {
 namespace server {
 
 class LL_SHARED_LIB Socket : public TCPSocketBase {
+	protected:
+		// Redefinition to not be used by user
+		i32 writeBytes(const void* bytes, const len_t length) const __LL_EXCEPT__;
+		// Redefinition to not be used by user
+		i32 sendBytes(const void* bytes, const len_t length) const __LL_EXCEPT__;
+		// Redefinition to not be used by user
+		i32 readBytes(void* bytes, const len_t bytesToRead) const __LL_EXCEPT__;
 	public:
 		Socket(const ui16 port) __LL_EXCEPT__;
 		~Socket() __LL_EXCEPT__;

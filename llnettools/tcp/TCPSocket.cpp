@@ -65,6 +65,16 @@ ll_bool_t Socket::isValidSocket() const __LL_EXCEPT__ {
 } // namespace client
 namespace server {
 
+i32 Socket::writeBytes(const void* bytes, const len_t length) const __LL_EXCEPT__ {
+    return TCPSocketBase::writeBytes(bytes, length);
+}
+i32 Socket::sendBytes(const void* bytes, const len_t length) const __LL_EXCEPT__ {
+    return TCPSocketBase::sendBytes(bytes, length);
+}
+i32 Socket::readBytes(void* bytes, const len_t bytesToRead) const __LL_EXCEPT__ {
+    return TCPSocketBase::readBytes(bytes, bytesToRead);
+}
+
 Socket::Socket(const ui16 port) __LL_EXCEPT__ : TCPSocketBase(port) {}
 Socket::~Socket() __LL_EXCEPT__ {}
 
