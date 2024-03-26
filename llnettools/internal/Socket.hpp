@@ -75,8 +75,9 @@ class LL_SHARED_LIB Socket {
 		i32 readBytes(void* bytes, const len_t bytesToRead) const __LL_EXCEPT__;
 
 		// Clears socket and makes it invalid to use
+		// To use this socket again use: reset()
 		void closeSocket() __LL_EXCEPT__;
-		// Resets this socket to use it again
+		// Proxy of closeSocket()
 		void clear() __LL_EXCEPT__;
 		// Use this to reset or start socket
 		// This uses the function clear() by itself

@@ -81,17 +81,7 @@ void Socket::closeSocket() __LL_EXCEPT__ {
 		this->addr = LL_NULLPTR;
 	}
 }
-void Socket::clear() __LL_EXCEPT__ {
-	if (this->isValidSocket()) {
-		CLOSE_SOCKET(this->sock);
-		this->sock = INVALID_SOCKET;
-	}
-
-	if (this->addr != LL_NULLPTR) {
-		delete this->addr;
-		this->addr = LL_NULLPTR;
-	}
-}
+void Socket::clear() __LL_EXCEPT__ { this->closeSocket(); }
 void Socket::reset(const ProtocolType protocol_type, const NetType net_type) __LL_EXCEPT__ {
 	this->clear();
 	this->initSocket(protocol_type, net_type);
