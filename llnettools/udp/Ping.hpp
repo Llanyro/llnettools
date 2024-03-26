@@ -50,10 +50,10 @@ class LL_SHARED_LIB Ping {
 		/*
 		*	Return true if Windows HANDLE is in good status
 		*/
-		ll_bool_t isValidSocket() const __LL_EXCEPT__;
-		b64 replySize() const __LL_EXCEPT__;
+		__LL_NODISCARD__ ll_bool_t isValidSocket() const __LL_EXCEPT__;
+		__LL_NODISCARD__ b64 replySize() const __LL_EXCEPT__;
 
-		PingResult ping(const ui64 timeout = 5000) __LL_EXCEPT__;
+		__LL_NODISCARD__ PingResult ping(const ui64 timeout = 5000) __LL_EXCEPT__;
 };
 #else
 class LL_SHARED_LIB Ping : public __internal__::Socket {

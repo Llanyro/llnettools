@@ -50,8 +50,8 @@ class LL_SHARED_LIB Socket : public TCPSocketBase {
 		Socket(Socket&& other) __LL_EXCEPT__;
 		Socket& operator=(Socket&& other) __LL_EXCEPT__;
 
-		LastError getLastError() const __LL_EXCEPT__;
-		ll_bool_t isValidSocket() const __LL_EXCEPT__;
+		__LL_NODISCARD__ LastError getLastError() const __LL_EXCEPT__;
+		__LL_NODISCARD__ ll_bool_t isValidSocket() const __LL_EXCEPT__;
 };
 
 } // namespace client
@@ -75,9 +75,9 @@ class LL_SHARED_LIB Socket : public TCPSocketBase {
 		Socket(Socket&& other) __LL_EXCEPT__;
 		Socket& operator=(Socket&& other) __LL_EXCEPT__;
 
-		i32 bindPort() const __LL_EXCEPT__;
-		i32 startListening() const __LL_EXCEPT__;
-		TCPSocketBase acceptClient() const __LL_EXCEPT__;
+		__LL_NODISCARD__ i32 bindPort() const __LL_EXCEPT__;
+		__LL_NODISCARD__ i32 startListening() const __LL_EXCEPT__;
+		__LL_NODISCARD__ TCPSocketBase acceptClient() const __LL_EXCEPT__;
 };
 
 } // namespace server

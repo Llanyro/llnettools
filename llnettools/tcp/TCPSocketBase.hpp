@@ -41,7 +41,7 @@ class LL_SHARED_LIB TCPSocketBase : public Socket {
 		TCPSocketBase(TCPSocketBase&& other) __LL_EXCEPT__;
 		TCPSocketBase& operator=(TCPSocketBase&& other) __LL_EXCEPT__;
 
-		ui16 getPort() const __LL_EXCEPT__;
+		__LL_NODISCARD__ ui16 getPort() const __LL_EXCEPT__;
 };
 
 } // namespace tcp

@@ -41,7 +41,7 @@ class LL_SHARED_LIB UDPSocketBase : public Socket {
 		UDPSocketBase(UDPSocketBase&& other) __LL_EXCEPT__;
 		UDPSocketBase& operator=(UDPSocketBase&& other) __LL_EXCEPT__;
 
-		ui16 getPort() const __LL_EXCEPT__;
+		__LL_NODISCARD__ ui16 getPort() const __LL_EXCEPT__;
 };
 
 } // namespace udp
