@@ -71,4 +71,4 @@ class LL_SHARED_LIB Ping : public __internal__::Socket {
 } // namespace net
 } // namespace llcpp
 
-#endif /* LLCPP_NET_PING_HPP_ */
+#endif // LLCPP_NET_PING_HPP_
