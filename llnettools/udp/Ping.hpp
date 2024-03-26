@@ -39,11 +39,13 @@ class LL_SHARED_LIB Ping {
 	public:
 		Ping() __LL_EXCEPT__;
 		Ping(ll_string_t ip) __LL_EXCEPT__;
-		Ping(const Ping& other) __LL_EXCEPT__ = delete;
-		Ping(Ping&& other) __LL_EXCEPT__;
-		Ping& operator=(const Ping& other) __LL_EXCEPT__ = delete;
-		Ping& operator=(Ping&& other) __LL_EXCEPT__;
 		~Ping() __LL_EXCEPT__;
+
+		Ping(const Ping&) __LL_EXCEPT__ = delete;
+		Ping& operator=(const Ping&) __LL_EXCEPT__ = delete;
+
+		Ping(Ping&& other) __LL_EXCEPT__;
+		Ping& operator=(Ping&& other) __LL_EXCEPT__;
 
 		/*
 		*	Return true if Windows HANDLE is in good status

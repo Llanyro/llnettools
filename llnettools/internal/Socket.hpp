@@ -46,8 +46,8 @@ class LL_SHARED_LIB Socket {
 		// Closes socket if opened
 		~Socket() __LL_EXCEPT__;
 
-		Socket(const Socket& other) __LL_EXCEPT__ = delete;
-		Socket& operator=(const Socket& other) __LL_EXCEPT__ = delete;
+		Socket(const Socket&) __LL_EXCEPT__ = delete;
+		Socket& operator=(const Socket&) __LL_EXCEPT__ = delete;
 
 		/*
 		*	Moves other socket to this socket data

@@ -35,8 +35,8 @@ class LL_SHARED_LIB TCPSocketBase : public Socket {
 		TCPSocketBase(const ll_socket_t sock, sockaddr_in* addr) __LL_EXCEPT__;
 		~TCPSocketBase() __LL_EXCEPT__;
 
-		TCPSocketBase(const TCPSocketBase& other) __LL_EXCEPT__ = delete;
-		TCPSocketBase& operator=(const TCPSocketBase& other) __LL_EXCEPT__ = delete;
+		TCPSocketBase(const TCPSocketBase&) __LL_EXCEPT__ = delete;
+		TCPSocketBase& operator=(const TCPSocketBase&) __LL_EXCEPT__ = delete;
 
 		TCPSocketBase(TCPSocketBase&& other) __LL_EXCEPT__;
 		TCPSocketBase& operator=(TCPSocketBase&& other) __LL_EXCEPT__;

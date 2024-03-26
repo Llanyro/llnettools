@@ -39,10 +39,11 @@ class LL_SHARED_LIB WSAController : public singleton::static_::Singleton<WSACont
 		~WSAController();
 		#pragma endregion
 	public:
-		WSAController(const WSAController& other) __LL_EXCEPT__ = delete;
-		WSAController& operator=(const WSAController& other) __LL_EXCEPT__ = delete;
-		WSAController(WSAController&& other) __LL_EXCEPT__ = delete;
-		WSAController& operator=(WSAController&& other) __LL_EXCEPT__ = delete;
+		WSAController(const WSAController&) __LL_EXCEPT__ = delete;
+		WSAController& operator=(const WSAController&) __LL_EXCEPT__ = delete;
+
+		WSAController(WSAController&&) __LL_EXCEPT__ = delete;
+		WSAController& operator=(WSAController&&) __LL_EXCEPT__ = delete;
 };
 
 } // namespace net

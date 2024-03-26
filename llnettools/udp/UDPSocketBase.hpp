@@ -35,8 +35,8 @@ class LL_SHARED_LIB UDPSocketBase : public Socket {
 		UDPSocketBase(const ll_socket_t sock, sockaddr_in* addr) __LL_EXCEPT__;
 		~UDPSocketBase() __LL_EXCEPT__;
 
-		UDPSocketBase(const UDPSocketBase& other) __LL_EXCEPT__ = delete;
-		UDPSocketBase& operator=(const UDPSocketBase& other) __LL_EXCEPT__ = delete;
+		UDPSocketBase(const UDPSocketBase&) __LL_EXCEPT__ = delete;
+		UDPSocketBase& operator=(const UDPSocketBase&) __LL_EXCEPT__ = delete;
 
 		UDPSocketBase(UDPSocketBase&& other) __LL_EXCEPT__;
 		UDPSocketBase& operator=(UDPSocketBase&& other) __LL_EXCEPT__;

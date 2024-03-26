@@ -44,8 +44,8 @@ class LL_SHARED_LIB Socket : public TCPSocketBase {
 		Socket(ll_string_t ip, const ui16 port) __LL_EXCEPT__;
 		~Socket() __LL_EXCEPT__;
 
-		Socket(const Socket& other) __LL_EXCEPT__ = delete;
-		Socket& operator=(const Socket& other) __LL_EXCEPT__ = delete;
+		Socket(const Socket&) __LL_EXCEPT__ = delete;
+		Socket& operator=(const Socket&) __LL_EXCEPT__ = delete;
 
 		Socket(Socket&& other) __LL_EXCEPT__;
 		Socket& operator=(Socket&& other) __LL_EXCEPT__;
@@ -62,8 +62,8 @@ class LL_SHARED_LIB Socket : public TCPSocketBase {
 		Socket(const ui16 port) __LL_EXCEPT__;
 		~Socket() __LL_EXCEPT__;
 
-		Socket(const Socket& other) __LL_EXCEPT__ = delete;
-		Socket& operator=(const Socket& other) __LL_EXCEPT__ = delete;
+		Socket(const Socket&) __LL_EXCEPT__ = delete;
+		Socket& operator=(const Socket&) __LL_EXCEPT__ = delete;
 
 		Socket(Socket&& other) __LL_EXCEPT__;
 		Socket& operator=(Socket&& other) __LL_EXCEPT__;
