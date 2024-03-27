@@ -69,6 +69,18 @@ Socket& Socket::operator=(Socket&& other) __LL_EXCEPT__ {
 
 
 ll_bool_t Socket::isValidSocket() const __LL_EXCEPT__ { return IS_INVALID_SOCKET(this->sock); }
+ll_bool_t Socket::hasError() const __LL_EXCEPT__ {
+	i32 error_code{};
+	i32 error_code_size = sizeof(error_code);
+	getsockopt(
+		this->sock,
+		SOL_SOCKET,
+		SO_ERROR,
+		reinterpret_cast<char*>(&error_code),
+		&error_code_size
+	);
+	return error_code != 0;
+}
 
 void Socket::closeSocket() __LL_EXCEPT__ {
 	if (this->isValidSocket()) {

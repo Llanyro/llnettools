@@ -73,6 +73,9 @@ class LL_SHARED_LIB Socket {
 		*	Return true if socket is in good status
 		*/
 		__LL_NODISCARD__ ll_bool_t isValidSocket() const __LL_EXCEPT__;
+		// Checks is opened socket has an error
+		// Do not mistake with isValidSocket()
+		__LL_NODISCARD__ ll_bool_t hasError() const __LL_EXCEPT__;
 
 		// Clears socket and makes it invalid to use
 		// To use this socket again use: reset()
