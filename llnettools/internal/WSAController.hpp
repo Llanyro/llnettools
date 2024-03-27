@@ -48,7 +48,6 @@ class LL_SHARED_LIB WSAController : public singleton::static_::Singleton<WSACont
 
 		__LL_NODISCARD__ ll_bool_t isOk() const __LL_EXCEPT__;
 		__LL_NODISCARD__ i32 getStatus() const __LL_EXCEPT__;
-		__LL_NODISCARD__ i32 getLastError() const __LL_EXCEPT__;
 };
 
 } // namespace net

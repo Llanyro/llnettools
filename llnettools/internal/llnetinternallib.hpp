@@ -27,6 +27,7 @@
 
 	#define IS_INVALID_SOCKET(s) (s != INVALID_SOCKET)
 	#define CLOSE_SOCKET(s) closesocket(s)
+	#define GET_SOCKET_LAST_ERROR WSAGetLastError()
 	#pragma comment(lib, "Ws2_32.lib") // #pragma comment(lib, "ws2_32.lib")
 #elif defined(POSIX_SYSTEM) || defined(UNIX_SYSTEM)
 	#include <unistd.h>
@@ -35,6 +36,7 @@
 	#include <netinet/in.h>
 	#define IS_INVALID_SOCKET(s) (s > INVALID_SOCKET)
 	#define CLOSE_SOCKET(s) close(s)
+	#define GET_SOCKET_LAST_ERROR errno
 #endif // WINDOWS_SYSTEM || POSIX_SYSTEM || UNIX_SYSTEM
 
 #endif // LLANYLIB_NETTOOLS_NETINTERNALLIB_HPP_

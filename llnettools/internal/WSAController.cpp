@@ -30,9 +30,6 @@ ll_bool_t WSAController::isOk() const __LL_EXCEPT__ {
 i32 WSAController::getStatus() const __LL_EXCEPT__ {
 	return this->wsaStatus;
 }
-i32 WSAController::getLastError() const __LL_EXCEPT__ {
-	return WSAGetLastError();
-}
 
 } // namespace net
 } // namespace llcpp

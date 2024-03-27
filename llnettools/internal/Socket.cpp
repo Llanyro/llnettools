@@ -100,7 +100,12 @@ Socket::IOStatus Socket::readBytes(void* bytes, const ui64 length, const ui64 ti
 		else if (bytesRead == 0)
 			std::this_thread::sleep_for(std::chrono::nanoseconds(TIMEOUT_DELAY));
 		else {
-			if (errno == EAGAIN || errno == EWOULDBLOCK)
+			i32 err = GET_SOCKET_LAST_ERROR;
+#if defined(WINDOWS_SYSTEM)
+			if (err == WSAEWOULDBLOCK)
+#elif defined(POSIX_SYSTEM) || defined(UNIX_SYSTEM)
+			if (err == EAGAIN || err == EWOULDBLOCK)
+#endif
 				std::this_thread::sleep_for(std::chrono::nanoseconds(TIMEOUT_DELAY));
 			else return IOStatus::InternalError;
 		}
