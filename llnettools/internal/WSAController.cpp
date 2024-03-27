@@ -14,11 +14,25 @@
 namespace llcpp {
 namespace net {
 
-WSAController::WSAController() {
-	this->wsaData = new WSADATA();
-	WSAStartup(MAKEWORD(2, 2), this->wsaData);	// Request os to dll of sockets
+WSAController::WSAController()
+	: Singleton<WSAController>()
+	, wsaData(new WSADATA())
+	, wsaStatus(WSAStartup(MAKEWORD(2, 2), this->wsaData))
+{}
+WSAController::~WSAController() {
+	WSACleanup();
+	delete this->wsaData;
 }
-WSAController::~WSAController() { delete this->wsaData; }
+
+ll_bool_t WSAController::isOk() const __LL_EXCEPT__ {
+	return this->wsaStatus == 0;
+}
+i32 WSAController::getStatus() const __LL_EXCEPT__ {
+	return this->wsaStatus;
+}
+i32 WSAController::getLastError() const __LL_EXCEPT__ {
+	return WSAGetLastError();
+}
 
 } // namespace net
 } // namespace llcpp

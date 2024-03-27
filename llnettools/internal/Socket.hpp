@@ -23,6 +23,14 @@ namespace llcpp {
 namespace net {
 
 class LL_SHARED_LIB Socket {
+	public:
+		enum class IOStatus {
+			TimeOut,
+			InternalError,
+			ErrorCannotStartNonBlockingMode,
+			Ok,
+			Unknown
+		};
     protected:
 		ll_socket_t sock;
 		sockaddr_in* addr;
@@ -61,13 +69,17 @@ class LL_SHARED_LIB Socket {
 		*	In unix this could lead to a signal
 		*	So i recommend to get the signal to let the program contnue normally
 		*/
-		__LL_NODISCARD__ i32 writeBytes(const void* bytes, const len_t length) const __LL_EXCEPT__;
+		__LL_NODISCARD__ i32 writeBytes(const void* bytes, const ui64 length) const __LL_EXCEPT__;
 		// Proxy of writeBytes()
-		__LL_NODISCARD__ i32 sendBytes(const void* bytes, const len_t length) const __LL_EXCEPT__;
+		__LL_NODISCARD__ i32 sendBytes(const void* bytes, const ui64 length) const __LL_EXCEPT__;
 		/*
 		*	...
 		*/
-		__LL_NODISCARD__ i32 readBytes(void* bytes, const len_t bytesToRead) const __LL_EXCEPT__;
+		__LL_NODISCARD__ i32 readBytes(void* bytes, const ui64 bytesToRead) const __LL_EXCEPT__;
+		// Like read bytes but with a timeout in nanoseconds
+		// If error unblocking socket, ask WSAController (only in Windows) 
+		// If error reading from socket use strerror(errno) to get error
+		__LL_NODISCARD__ IOStatus readBytes(void* bytes, const ui64 bytesToRead, const ui64 timeout) const __LL_EXCEPT__;
 
 		/*
 		*	Return true if socket is in good status

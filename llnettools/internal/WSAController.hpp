@@ -32,6 +32,7 @@ namespace net {
 class LL_SHARED_LIB WSAController : public singleton::static_::Singleton<WSAController> {
 	private:
 		WSAData* wsaData;
+		i32 wsaStatus;
 	private:
 		#pragma region Singleton
 		friend class singleton::static_::Singleton<WSAController>;
@@ -44,6 +45,10 @@ class LL_SHARED_LIB WSAController : public singleton::static_::Singleton<WSACont
 
 		WSAController(WSAController&&) __LL_EXCEPT__ = delete;
 		WSAController& operator=(WSAController&&) __LL_EXCEPT__ = delete;
+
+		__LL_NODISCARD__ ll_bool_t isOk() const __LL_EXCEPT__;
+		__LL_NODISCARD__ i32 getStatus() const __LL_EXCEPT__;
+		__LL_NODISCARD__ i32 getLastError() const __LL_EXCEPT__;
 };
 
 } // namespace net
