@@ -39,16 +39,6 @@ void Socket::initSocket(const ProtocolType protocol_type, const NetType net_type
 	);
 }
 
-i32 Socket::writeBytes(const void* bytes, const len_t length) const __LL_EXCEPT__ {
-	return send(this->sock, reinterpret_cast<ll_string_t>(bytes), length, 0);
-}
-i32 Socket::sendBytes(const void* bytes, const len_t length) const __LL_EXCEPT__ {
-	return this->writeBytes(bytes, length);
-}
-i32 Socket::readBytes(void* bytes, const len_t bytesToRead) const __LL_EXCEPT__ {
-	return recv(this->sock, reinterpret_cast<ll_char_t*>(bytes), bytesToRead, 0);
-}
-
 Socket::Socket() __LL_EXCEPT__ : Socket(INVALID_SOCKET, LL_NULLPTR) {}
 Socket::Socket(const ll_socket_t sock, sockaddr_in* addr) __LL_EXCEPT__ : sock(sock), addr(addr) {}
 Socket::Socket(const ProtocolType protocol_type, const NetType net_type, sockaddr_in* addr) __LL_EXCEPT__
@@ -56,7 +46,6 @@ Socket::Socket(const ProtocolType protocol_type, const NetType net_type, sockadd
 	this->initSocket(protocol_type, net_type);
 }
 Socket::~Socket() __LL_EXCEPT__ { this->closeSocket(); }
-
 
 Socket::Socket(Socket&& other) __LL_EXCEPT__ : Socket(other.sock, other.addr) { other.simpleClear(); }
 Socket& Socket::operator=(Socket&& other) __LL_EXCEPT__ {
@@ -67,6 +56,15 @@ Socket& Socket::operator=(Socket&& other) __LL_EXCEPT__ {
 	return *this;
 }
 
+i32 Socket::writeBytes(const void* bytes, const len_t length) const __LL_EXCEPT__ {
+	return send(this->sock, reinterpret_cast<ll_string_t>(bytes), length, 0);
+}
+i32 Socket::sendBytes(const void* bytes, const len_t length) const __LL_EXCEPT__ {
+	return this->writeBytes(bytes, length);
+}
+i32 Socket::readBytes(void* bytes, const len_t bytesToRead) const __LL_EXCEPT__ {
+	return recv(this->sock, reinterpret_cast<ll_char_t*>(bytes), bytesToRead, 0);
+}
 
 ll_bool_t Socket::isValidSocket() const __LL_EXCEPT__ { return IS_INVALID_SOCKET(this->sock); }
 ll_bool_t Socket::hasError() const __LL_EXCEPT__ {
