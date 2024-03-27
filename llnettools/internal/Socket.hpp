@@ -79,7 +79,7 @@ class LL_SHARED_LIB Socket {
 		// Like read bytes but with a timeout in nanoseconds
 		// If error unblocking socket, ask WSAController (only in Windows) 
 		// If error reading from socket use strerror(errno) to get error
-		__LL_NODISCARD__ IOStatus readBytes(void* bytes, const ui64 bytesToRead, const ui64 timeout) const __LL_EXCEPT__;
+		__LL_NODISCARD__ IOStatus readBytes(void* bytes, const ui64 bytesToRead, const f64 timeout) const __LL_EXCEPT__;
 
 		/*
 		*	Return true if socket is in good status

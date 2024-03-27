@@ -73,7 +73,7 @@ i32 Socket::sendBytes(const void* bytes, const ui64 length) const __LL_EXCEPT__ 
 i32 Socket::readBytes(void* bytes, const ui64 length) const __LL_EXCEPT__ {
 	return recv(this->sock, reinterpret_cast<ll_char_t*>(bytes), length, 0);
 }
-Socket::IOStatus Socket::readBytes(void* bytes, const ui64 length, const ui64 timeout) const __LL_EXCEPT__ {
+Socket::IOStatus Socket::readBytes(void* bytes, const ui64 length, const f64 timeout) const __LL_EXCEPT__ {
 #if defined(WINDOWS_SYSTEM)
     u_long mode = 1; // 1 to enable non-blocking mode
     if (ioctlsocket(this->sock, FIONBIO, &mode) != 0)
