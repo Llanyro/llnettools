@@ -19,8 +19,9 @@
 
 #if defined(WINDOWS_SYSTEM)
 	#pragma warning(push)
-	#pragma warning(disable:4820) // ignore a warning of winsock (not my problem
-	#pragma warning(disable:4668) // ignore a warning of winsock (not my problem
+	#pragma warning(disable:4820) // ignore a warning of winsock (not my problem)
+	#pragma warning(disable:4668) // ignore a warning of winsock (not my problem)
+	#pragma warning(disable:5039) // ignore a warning of winsock (not my problem)
 	#include <winsock2.h>
 	#include <Ws2tcpip.h>
 	#pragma warning(pop)

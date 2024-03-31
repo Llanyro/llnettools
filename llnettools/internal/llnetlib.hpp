@@ -26,17 +26,19 @@ namespace llcpp {
 namespace net {
 
 #if defined(WINDOWS_SYSTEM)
-using ll_socket_t = ui32;		// Socket descriptor
+using ll_socket_t = ui64;		// Socket descriptor
+using ADDRESS_FAMILY = ui16;
 
 #elif defined(POSIX_SYSTEM) || defined(UNIX_SYSTEM)
 using ll_socket_t = i32;					// Socket descriptor
+using ADDRESS_FAMILY = ui32;
 constexpr ll_socket_t INVALID_SOCKET = -1;	// Value of invalid socket
 
 #endif // WINDOWS_SYSTEM || POSIX_SYSTEM || UNIX_SYSTEM
 
 using in_addr_t = ui32;
 
-enum class ProtocolType {
+enum class ProtocolType : ADDRESS_FAMILY {
 	UNSPEC       = 0,               // unspecified
 	UNIX         = 1,               // local to host (pipes, portals)
 	INET         = 2,               // internetwork: UDP, TCP, etc.

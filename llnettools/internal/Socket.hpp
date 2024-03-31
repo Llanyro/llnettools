@@ -25,6 +25,7 @@ namespace net {
 class LL_SHARED_LIB Socket {
 	public:
 		enum class IOStatus {
+			NegativeTimeDiff,
 			TimeOut,
 			InternalError,
 			ErrorCannotStartNonBlockingMode,
@@ -69,13 +70,22 @@ class LL_SHARED_LIB Socket {
 		*	In unix this could lead to a signal
 		*	So i recommend to get the signal to let the program contnue normally
 		*/
-		__LL_NODISCARD__ i32 writeBytes(const void* bytes, const ui64 length) const __LL_EXCEPT__;
+		__LL_NODISCARD__ i64 writeBytes(const void* bytes, const i64 length) const __LL_EXCEPT__;
 		// Proxy of writeBytes()
-		__LL_NODISCARD__ i32 sendBytes(const void* bytes, const ui64 length) const __LL_EXCEPT__;
+		__LL_NODISCARD__ i64 sendBytes(const void* bytes, const i64 length) const __LL_EXCEPT__;
+		// Reads bytes and writes into a buffer
+		__LL_NODISCARD__ i64 readBytes(void* bytes, const i64 bytesToRead) const __LL_EXCEPT__;
 		/*
-		*	...
+		*	In unix this could lead to a signal
+		*	So i recommend to get the signal to let the program contnue normally
 		*/
-		__LL_NODISCARD__ i32 readBytes(void* bytes, const ui64 bytesToRead) const __LL_EXCEPT__;
+		__LL_NODISCARD__ i32 writeBytes(const void* bytes, const i32 length) const __LL_EXCEPT__;
+		// Proxy of writeBytes()
+		__LL_NODISCARD__ i32 sendBytes(const void* bytes, const i32 length) const __LL_EXCEPT__;
+		// Reads bytes and writes into a buffer
+		__LL_NODISCARD__ i32 readBytes(void* bytes, const i32 bytesToRead) const __LL_EXCEPT__;
+
+
 		// Like read bytes but with a timeout in nanoseconds
 		// If error unblocking socket, ask WSAController (only in Windows) 
 		// If error reading from socket use strerror(errno) to get error

@@ -17,7 +17,7 @@ namespace net {
 WSAController::WSAController()
 	: Singleton<WSAController>()
 	, wsaData(new WSADATA())
-	, wsaStatus(WSAStartup(MAKEWORD(2, 2), this->wsaData))
+	, wsaStatus(WSAStartup(MAKEWORD(2, 2), wsaData))
 {}
 WSAController::~WSAController() {
 	WSACleanup();

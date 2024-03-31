@@ -11,6 +11,8 @@
 
 #include "llnetinternallib.hpp"
 
+#include <llanylib/bits.hpp>
+
 #include <magic_enum/magic_enum.hpp>
 
 #include <chrono>
@@ -24,6 +26,28 @@ namespace llcpp {
 namespace net {
 
 constexpr ui64 TIMEOUT_DELAY = 1000000;
+
+template<class ConvertType, class ByteType, class Func = i32(*)(ll_socket_t, ByteType, i32, i32)>
+inline i64 b64socket(ll_socket_t sock, ByteType bytes, const i64 length, Func f) __LL_EXCEPT__ {
+	i32 result{};
+	ConvertType __begin = reinterpret_cast<ConvertType>(bytes);
+	ConvertType __bytes = __begin;
+	auto __length = bits::i64Divisor::div(length);
+
+	for (i32 i{}; i < __length.h; ++i) {
+		result = f(sock, __bytes, bits::I32_MAX, 0);
+		if (result != bits::UI32_MAX) return __bytes - __begin;
+		else __bytes += result;
+	}
+	if (__length.l > 0) {
+		result = f(sock, __bytes, __length.l, 0);
+		if (result != bits::UI32_MAX) return __bytes - __begin;
+		else __bytes += result;
+	}
+
+	return __bytes - __begin;
+}
+
 
 void Socket::simpleClear() __LL_EXCEPT__ {
 	this->sock = INVALID_SOCKET;
@@ -64,13 +88,40 @@ Socket& Socket::operator=(Socket&& other) __LL_EXCEPT__ {
 	return *this;
 }
 
-i32 Socket::writeBytes(const void* bytes, const ui64 length) const __LL_EXCEPT__ {
-	return send(this->sock, reinterpret_cast<ll_string_t>(bytes), length, 0);
+i64 Socket::writeBytes(const void* bytes, const i64 length) const __LL_EXCEPT__ {
+	//i32 result{};
+	//ll_string_t __bytes = reinterpret_cast<ll_string_t>(bytes);
+	//auto __length = bits::i64Divisor::div(length);
+	//
+	//for (i32 i{}; i < __length.h; ++i) {
+	//	result = send(this->sock, __bytes, bits::I32_MAX, 0);
+	//	if (result != bits::UI32_MAX) return __bytes - bytes;
+	//	else __bytes += result;
+	//}
+	//if (__length.l > 0) {
+	//	result = send(this->sock, __bytes, __length.l, 0);
+	//	if (result != bits::UI32_MAX) return __bytes - bytes;
+	//	else __bytes += result;
+	//}
+	//
+	//return __bytes - bytes;
+	return b64socket<ll_string_t>(this->sock, bytes, length, send);
 }
-i32 Socket::sendBytes(const void* bytes, const ui64 length) const __LL_EXCEPT__ {
+i64 Socket::sendBytes(const void* bytes, const i64 length) const __LL_EXCEPT__ {
 	return this->writeBytes(bytes, length);
 }
-i32 Socket::readBytes(void* bytes, const ui64 length) const __LL_EXCEPT__ {
+i64 Socket::readBytes(void* bytes, const i64 length) const __LL_EXCEPT__ {
+	return b64socket<ll_char_t*>(this->sock, bytes, length, recv);
+}
+
+
+i32 Socket::writeBytes(const void* bytes, const i32 length) const __LL_EXCEPT__ {
+	return send(this->sock, reinterpret_cast<ll_string_t>(bytes), length, 0);
+}
+i32 Socket::sendBytes(const void* bytes, const i32 length) const __LL_EXCEPT__ {
+	return this->writeBytes(bytes, length);
+}
+i32 Socket::readBytes(void* bytes, const i32 length) const __LL_EXCEPT__ {
 	return recv(this->sock, reinterpret_cast<ll_char_t*>(bytes), length, 0);
 }
 Socket::IOStatus Socket::readBytes(void* bytes, const ui64 length, const ui64 timeout) const __LL_EXCEPT__ {
@@ -89,10 +140,11 @@ Socket::IOStatus Socket::readBytes(void* bytes, const ui64 length, const ui64 ti
 
 	while (bytesReaded < length) {
 		auto currentTime = std::chrono::steady_clock::now();
-		if (std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - startTime).count() >= timeout)
-			return IOStatus::TimeOut;
+		auto diffTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - startTime).count();
+		if (diffTime < 0ll) return IOStatus::NegativeTimeDiff;
+		if (static_cast<ui64>(diffTime) >= timeout) return IOStatus::TimeOut;
 
-		i64 bytesRead = recv(this->sock, buffer + bytesReaded, length - bytesReaded, 0);
+		i32 bytesRead = recv(this->sock, buffer + bytesReaded, length - bytesReaded, 0);
 
 		// Add bytes to counter
 		if (bytesRead > 0) bytesReaded += bytesRead;
