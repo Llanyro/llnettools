@@ -65,24 +65,24 @@ ll_bool_t Socket::isValidSocket() const __LL_EXCEPT__ {
 } // namespace client
 namespace server {
 
-i64 Socket::writeBytes(const void* bytes, const i64 length) const __LL_EXCEPT__ {
-    return TCPSocketBase::writeBytes(bytes, length);
+i64 Socket::writeBytes(const void* data, const i64 bytes) const __LL_EXCEPT__ {
+    return TCPSocketBase::writeBytes(data, bytes);
 }
-i64 Socket::sendBytes(const void* bytes, const i64 length) const __LL_EXCEPT__ {
-    return TCPSocketBase::sendBytes(bytes, length);
+i64 Socket::sendBytes(const void* data, const i64 bytes) const __LL_EXCEPT__ {
+    return TCPSocketBase::sendBytes(data, bytes);
 }
-i64 Socket::readBytes(void* bytes, const i64 bytesToRead) const __LL_EXCEPT__ {
-    return TCPSocketBase::readBytes(bytes, bytesToRead);
+i64 Socket::readBytes(void* data, const i64 bytes) const __LL_EXCEPT__ {
+    return TCPSocketBase::readBytes(data, bytes);
 }
 
-i32 Socket::writeBytes(const void* bytes, const i32 length) const __LL_EXCEPT__ {
-    return TCPSocketBase::writeBytes(bytes, length);
+i32 Socket::writeBytes(const void* data, const i32 bytes) const __LL_EXCEPT__ {
+    return TCPSocketBase::writeBytes(data, bytes);
 }
-i32 Socket::sendBytes(const void* bytes, const i32 length) const __LL_EXCEPT__ {
-    return TCPSocketBase::sendBytes(bytes, length);
+i32 Socket::sendBytes(const void* data, const i32 bytes) const __LL_EXCEPT__ {
+    return TCPSocketBase::sendBytes(data, bytes);
 }
-i32 Socket::readBytes(void* bytes, const i32 bytesToRead) const __LL_EXCEPT__ {
-    return TCPSocketBase::readBytes(bytes, bytesToRead);
+i32 Socket::readBytes(void* data, const i32 bytes) const __LL_EXCEPT__ {
+    return TCPSocketBase::readBytes(data, bytes);
 }
 
 Socket::Socket(const ui16 port) __LL_EXCEPT__ : TCPSocketBase(port) {}

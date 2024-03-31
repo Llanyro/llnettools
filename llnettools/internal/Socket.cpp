@@ -48,7 +48,6 @@ inline i64 b64socket(ll_socket_t sock, ByteType bytes, const i64 length, Func f)
 	return __bytes - __begin;
 }
 
-
 void Socket::simpleClear() __LL_EXCEPT__ {
 	this->sock = INVALID_SOCKET;
 	this->addr = LL_NULLPTR;
@@ -88,43 +87,26 @@ Socket& Socket::operator=(Socket&& other) __LL_EXCEPT__ {
 	return *this;
 }
 
-i64 Socket::writeBytes(const void* bytes, const i64 length) const __LL_EXCEPT__ {
-	//i32 result{};
-	//ll_string_t __bytes = reinterpret_cast<ll_string_t>(bytes);
-	//auto __length = bits::i64Divisor::div(length);
-	//
-	//for (i32 i{}; i < __length.h; ++i) {
-	//	result = send(this->sock, __bytes, bits::I32_MAX, 0);
-	//	if (result != bits::UI32_MAX) return __bytes - bytes;
-	//	else __bytes += result;
-	//}
-	//if (__length.l > 0) {
-	//	result = send(this->sock, __bytes, __length.l, 0);
-	//	if (result != bits::UI32_MAX) return __bytes - bytes;
-	//	else __bytes += result;
-	//}
-	//
-	//return __bytes - bytes;
-	return b64socket<ll_string_t>(this->sock, bytes, length, send);
+i64 Socket::writeBytes(const void* data, const i64 bytes) const __LL_EXCEPT__ {
+	return b64socket<ll_string_t>(this->sock, data, bytes, send);
 }
-i64 Socket::sendBytes(const void* bytes, const i64 length) const __LL_EXCEPT__ {
-	return this->writeBytes(bytes, length);
+i64 Socket::sendBytes(const void* data, const i64 bytes) const __LL_EXCEPT__ {
+	return this->writeBytes(data, bytes);
 }
-i64 Socket::readBytes(void* bytes, const i64 length) const __LL_EXCEPT__ {
-	return b64socket<ll_char_t*>(this->sock, bytes, length, recv);
+i64 Socket::readBytes(void* data, const i64 bytes) const __LL_EXCEPT__ {
+	return b64socket<ll_char_t*>(this->sock, data, bytes, recv);
 }
 
-
-i32 Socket::writeBytes(const void* bytes, const i32 length) const __LL_EXCEPT__ {
-	return send(this->sock, reinterpret_cast<ll_string_t>(bytes), length, 0);
+i32 Socket::writeBytes(const void* data, const i32 bytes) const __LL_EXCEPT__ {
+	return send(this->sock, reinterpret_cast<ll_string_t>(data), bytes, 0);
 }
-i32 Socket::sendBytes(const void* bytes, const i32 length) const __LL_EXCEPT__ {
-	return this->writeBytes(bytes, length);
+i32 Socket::sendBytes(const void* data, const i32 bytes) const __LL_EXCEPT__ {
+	return this->writeBytes(data, bytes);
 }
-i32 Socket::readBytes(void* bytes, const i32 length) const __LL_EXCEPT__ {
-	return recv(this->sock, reinterpret_cast<ll_char_t*>(bytes), length, 0);
+i32 Socket::readBytes(void* data, const i32 bytes) const __LL_EXCEPT__ {
+	return recv(this->sock, reinterpret_cast<ll_char_t*>(data), bytes, 0);
 }
-Socket::IOStatus Socket::readBytes(void* bytes, const ui64 length, const ui64 timeout) const __LL_EXCEPT__ {
+Socket::IOStatus Socket::readBytes(void* data, const ui64 bytes, const ui64 timeout) const __LL_EXCEPT__ {
 #if defined(WINDOWS_SYSTEM)
     u_long mode = 1; // 1 to enable non-blocking mode
     if (ioctlsocket(this->sock, FIONBIO, &mode) != 0)
@@ -136,18 +118,21 @@ Socket::IOStatus Socket::readBytes(void* bytes, const ui64 length, const ui64 ti
 
 	auto startTime = std::chrono::steady_clock::now();
 	ui64 bytesReaded{};
-	char* buffer = reinterpret_cast<char*>(bytes);
+	ll_char_t* buffer = reinterpret_cast<ll_char_t*>(data);
 
-	while (bytesReaded < length) {
+	while (bytesReaded < bytes) {
 		auto currentTime = std::chrono::steady_clock::now();
 		auto diffTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - startTime).count();
 		if (diffTime < 0ll) return IOStatus::NegativeTimeDiff;
 		if (static_cast<ui64>(diffTime) >= timeout) return IOStatus::TimeOut;
 
-		i32 bytesRead = recv(this->sock, buffer + bytesReaded, length - bytesReaded, 0);
+		i32 bytesRead = recv(this->sock, buffer, bits::I32_MAX, 0);
 
 		// Add bytes to counter
-		if (bytesRead > 0) bytesReaded += bytesRead;
+		if (bytesRead > 0) {
+			bytesReaded += bytesRead;
+			buffer += bytesRead;
+		}
 		// If nothing was readed, we wait to next round
 		else if (bytesRead == 0)
 			std::this_thread::sleep_for(std::chrono::nanoseconds(TIMEOUT_DELAY));

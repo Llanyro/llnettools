@@ -60,18 +60,18 @@ namespace server {
 class LL_SHARED_LIB Socket : public TCPSocketBase {
 	protected:
 		// Redefinition to not be used by user
-		__LL_NODISCARD__ i64 writeBytes(const void* bytes, const i64 length) const __LL_EXCEPT__;
+		__LL_NODISCARD__ i64 writeBytes(const void* data, const i64 bytes) const __LL_EXCEPT__;
 		// Redefinition to not be used by user
-		__LL_NODISCARD__ i64 sendBytes(const void* bytes, const i64 length) const __LL_EXCEPT__;
+		__LL_NODISCARD__ i64 sendBytes(const void* data, const i64 bytes) const __LL_EXCEPT__;
 		// Redefinition to not be used by user
-		__LL_NODISCARD__ i64 readBytes(void* bytes, const i64 bytesToRead) const __LL_EXCEPT__;
+		__LL_NODISCARD__ i64 readBytes(void* data, const i64 bytes) const __LL_EXCEPT__;
 
 		// Redefinition to not be used by user
-		__LL_NODISCARD__ i32 writeBytes(const void* bytes, const i32 length) const __LL_EXCEPT__;
+		__LL_NODISCARD__ i32 writeBytes(const void* data, const i32 bytes) const __LL_EXCEPT__;
 		// Redefinition to not be used by user
-		__LL_NODISCARD__ i32 sendBytes(const void* bytes, const i32 length) const __LL_EXCEPT__;
+		__LL_NODISCARD__ i32 sendBytes(const void* data, const i32 bytes) const __LL_EXCEPT__;
 		// Redefinition to not be used by user
-		__LL_NODISCARD__ i32 readBytes(void* bytes, const i32 bytesToRead) const __LL_EXCEPT__;
+		__LL_NODISCARD__ i32 readBytes(void* data, const i32 bytes) const __LL_EXCEPT__;
 	public:
 		Socket(const ui16 port) __LL_EXCEPT__;
 		~Socket() __LL_EXCEPT__;
