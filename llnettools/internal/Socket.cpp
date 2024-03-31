@@ -41,7 +41,7 @@ inline i64 b64socket(ll_socket_t sock, ByteType bytes, const i64 length, Func f)
 	}
 	if (__length.l > 0) {
 		result = f(sock, __bytes, __length.l, 0);
-		if (result != bits::UI32_MAX) return __bytes - __begin;
+		if (result != __length.l) return __bytes - __begin;
 		else __bytes += result;
 	}
 
