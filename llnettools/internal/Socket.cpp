@@ -26,7 +26,6 @@ namespace llcpp {
 namespace net {
 
 constexpr ui64 TIMEOUT_DELAY = 1000000;
-constexpr i32 I32_MAX = bits::I32_MAX - 1;
 
 template<class ConvertType, class ByteType, class Func = i32(*)(ll_socket_t, ByteType, i32, i32)>
 inline i64 b64socket(ll_socket_t sock, ByteType bytes, const i64 length, Func f) __LL_EXCEPT__ {
@@ -36,8 +35,8 @@ inline i64 b64socket(ll_socket_t sock, ByteType bytes, const i64 length, Func f)
 	auto __length = bits::i64Divisor::div(length);
 
 	for (i32 i{}; i < __length.h; ++i) {
-		result = f(sock, __bytes, I32_MAX, 0);
-		if (result != I32_MAX) return __bytes - __begin;
+		result = f(sock, __bytes, bits::I32_MAX, 0);
+		if (result != bits::I32_MAX) return __bytes - __begin;
 		else __bytes += result;
 	}
 	if (__length.l > 0) {
@@ -127,7 +126,13 @@ Socket::IOStatus Socket::readBytes(void* data, const ui64 bytes, const ui64 time
 		if (diffTime < 0ll) return IOStatus::NegativeTimeDiff;
 		if (static_cast<ui64>(diffTime) >= timeout) return IOStatus::TimeOut;
 
-		i32 bytesRead = recv(this->sock, buffer, I32_MAX, 0);
+		ui64 __bytes = bytes - bytesReaded;
+		i64 bytesRead = this->readBytes(
+			buffer,
+			(__bytes > llcpp::bits::I64_MAX)
+				? llcpp::bits::I64_MAX
+				: static_cast<i64>(__bytes)
+		);
 
 		// Add bytes to counter
 		if (bytesRead > 0) {
