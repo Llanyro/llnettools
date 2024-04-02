@@ -91,7 +91,7 @@ class LL_SHARED_LIB Socket {
 		__LL_NODISCARD__ i64 readBytes(void* data, const i64 bytes) const __LL_EXCEPT__;
 		// Reads bytes and writes into a buffer
 		__LL_NODISCARD__ i32 readBytes(void* data, const i32 bytes) const __LL_EXCEPT__;
-		// Like read bytes but with a timeout in nanoseconds
+		// Like read bytes but with a timeout in milliseconds
 		// If error unblocking socket, ask WSAController (only in Windows) 
 		// If error reading from socket use strerror(errno) to get error
 		__LL_NODISCARD__ IOStatus readBytes(void* data, const ui64 bytes, const ui64 timeout) const __LL_EXCEPT__;
