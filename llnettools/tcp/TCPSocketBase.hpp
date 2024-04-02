@@ -1,21 +1,21 @@
 /*
- * TCPSocketBase.hpp
+ *	TCPSocketBase.hpp
  *
  *	Author: Francisco Julio Ruiz Fernandez
  *	Author: llanyro
  *
- *	Version: 1.0
+ *	Version: 1.1
  */
 
-#if defined(LLANYLIB_NETTOOLS_TCPSOCKETBASE_HPP_) // Guard && version protector
-	#if LLANYLIB_NETTOOLS_TCPSOCKETBASE_MAYOR_ != 1 || LLANYLIB_NETTOOLS_TCPSOCKETBASE_MINOR_ < 1
+#if defined(LLNETTOOLS_TCPSOCKETBASE_HPP_) // Guard && version protector
+	#if LLNETTOOLS_TCPSOCKETBASE_MAYOR_ != 1 || LLNETTOOLS_TCPSOCKETBASE_MINOR_ < 1
 		#error "TCPSocketBase.hpp version error!"
-	#endif // LLANYLIB_NETTOOLS_TCPSOCKETBASE_MAYOR_ || LLANYLIB_NETTOOLS_TCPSOCKETBASE_MINOR_
+	#endif // LLNETTOOLS_TCPSOCKETBASE_MAYOR_ || LLNETTOOLS_TCPSOCKETBASE_MINOR_
 
-#else !defined(LLANYLIB_NETTOOLS_TCPSOCKETBASE_HPP_)
-#define LLANYLIB_NETTOOLS_TCPSOCKETBASE_HPP_
-#define LLANYLIB_NETTOOLS_TCPSOCKETBASE_MAYOR_ 1
-#define LLANYLIB_NETTOOLS_TCPSOCKETBASE_MINOR_ 1
+#else !defined(LLNETTOOLS_TCPSOCKETBASE_HPP_)
+#define LLNETTOOLS_TCPSOCKETBASE_HPP_
+#define LLNETTOOLS_TCPSOCKETBASE_MAYOR_ 1
+#define LLNETTOOLS_TCPSOCKETBASE_MINOR_ 1
 
 #include <llanylib/definitions.hpp>
 #include "../internal/Socket.hpp"
@@ -48,4 +48,4 @@ class LL_SHARED_LIB TCPSocketBase : public Socket {
 } // namespace net
 } // namespace llcpp
 
-#endif // LLANYLIB_NETTOOLS_TCPSOCKETBASE_HPP_
+#endif // LLNETTOOLS_TCPSOCKETBASE_HPP_

@@ -4,14 +4,14 @@
  *	Author: Francisco Julio Ruiz Fernandez
  *	Author: llanyro
  *
- *	Version: 4.2
+ *	Version: 1.1
  */
 
-#ifndef LLANYLIB_NETTOOLS_HPP_
-#define LLANYLIB_NETTOOLS_HPP_
+#ifndef LLNETTOOLS_HPP_
+#define LLNETTOOLS_HPP_
 
 #include "llnettools/tcp/TCPSocket.hpp"
 #include "llnettools/udp/UDPSocketBase.hpp"
 //#include "llnettools/udp/Ping.hpp"		// WIP
 
-#endif // LLANYLIB_NETTOOLS_HPP_
+#endif // LLNETTOOLS_HPP_

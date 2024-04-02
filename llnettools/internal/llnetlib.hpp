@@ -1,21 +1,21 @@
 /*
- * llnetlib.hpp
+ *	llnetlib.hpp
  *
  *	Author: Francisco Julio Ruiz Fernandez
  *	Author: llanyro
  *
- *	Version: 1.0
+ *	Version: 1.1
  */
 
-#if defined(LLANYLIB_NETTOOLS_NETLIB_HPP_) // Guard && version protector
-	#if LLANYLIB_NETTOOLS_NETLIB_MAYOR_ != 1 || LLANYLIB_NETTOOLS_NETLIB_MINOR_ < 1
+#if defined(LLNETTOOLS_NETLIB_HPP_) // Guard && version protector
+	#if LLNETTOOLS_NETLIB_MAYOR_ != 1 || LLNETTOOLS_NETLIB_MINOR_ < 1
 		#error "llnetlib.hpp version error!"
-	#endif // LLANYLIB_NETTOOLS_NETLIB_MAYOR_ || LLANYLIB_NETTOOLS_NETLIB_MINOR_
+	#endif // LLNETTOOLS_NETLIB_MAYOR_ || LLNETTOOLS_NETLIB_MINOR_
 
-#else !defined(LLANYLIB_NETTOOLS_NETLIB_HPP_)
-#define LLANYLIB_NETTOOLS_NETLIB_HPP_
-#define LLANYLIB_NETTOOLS_NETLIB_MAYOR_ 1
-#define LLANYLIB_NETTOOLS_NETLIB_MINOR_ 1
+#else !defined(LLNETTOOLS_NETLIB_HPP_)
+#define LLNETTOOLS_NETLIB_HPP_
+#define LLNETTOOLS_NETLIB_MAYOR_ 1
+#define LLNETTOOLS_NETLIB_MINOR_ 1
 
 #include <llanylib/definitions.hpp>
 #include <llanylib/types.hpp>
@@ -113,4 +113,4 @@ enum class NetType {
 } // namespace net
 } // namespace llcpp
 
-#endif // LLANYLIB_NETTOOLS_NETLIB_HPP_
+#endif // LLNETTOOLS_NETLIB_HPP_

@@ -1,21 +1,21 @@
 /*
- * TCPSocket.hpp
+ *	TCPSocket.hpp
  *
  *	Author: Francisco Julio Ruiz Fernandez
  *	Author: llanyro
  *
- *	Version: 1.0
+ *	Version: 1.1
  */
 
-#if defined(LLANYLIB_NETTOOLS_TCPSOCKET_HPP_) // Guard && version protector
-	#if LLANYLIB_NETTOOLS_TCPSOCKET_MAYOR_ != 1 || LLANYLIB_NETTOOLS_TCPSOCKET_MINOR_ < 1
+#if defined(LLNETTOOLS_TCPSOCKET_HPP_) // Guard && version protector
+	#if LLNETTOOLS_TCPSOCKET_MAYOR_ != 1 || LLNETTOOLS_TCPSOCKET_MINOR_ < 1
 		#error "TCPSocket.hpp version error!"
-	#endif // LLANYLIB_NETTOOLS_TCPSOCKET_MAYOR_ || LLANYLIB_NETTOOLS_TCPSOCKET_MINOR_
+	#endif // LLNETTOOLS_TCPSOCKET_MAYOR_ || LLNETTOOLS_TCPSOCKET_MINOR_
 
-#else !defined(LLANYLIB_NETTOOLS_TCPSOCKET_HPP_)
-#define LLANYLIB_NETTOOLS_TCPSOCKET_HPP_
-#define LLANYLIB_NETTOOLS_TCPSOCKET_MAYOR_ 1
-#define LLANYLIB_NETTOOLS_TCPSOCKET_MINOR_ 1
+#else !defined(LLNETTOOLS_TCPSOCKET_HPP_)
+#define LLNETTOOLS_TCPSOCKET_HPP_
+#define LLNETTOOLS_TCPSOCKET_MAYOR_ 1
+#define LLNETTOOLS_TCPSOCKET_MINOR_ 1
 
 #include "TCPSocketBase.hpp"
 

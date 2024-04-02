@@ -1,21 +1,21 @@
 /*
- * Socket.hpp
+ *	Socket.hpp
  *
  *	Author: Francisco Julio Ruiz Fernandez
  *	Author: llanyro
  *
- *	Version: 1.0
+ *	Version: 1.1
  */
 
-#if defined(LLANYLIB_NETTOOLS_SOCKET_HPP_) // Guard && version protector
-	#if LLANYLIB_NETTOOLS_SOCKET_MAYOR_ != 1 || LLANYLIB_NETTOOLS_SOCKET_MINOR_ < 1
+#if defined(LLNETTOOLS_SOCKET_HPP_) // Guard && version protector
+	#if LLNETTOOLS_SOCKET_MAYOR_ != 1 || LLNETTOOLS_SOCKET_MINOR_ < 1
 		#error "Socket.hpp version error!"
-	#endif // LLANYLIB_NETTOOLS_SOCKET_MAYOR_ || LLANYLIB_NETTOOLS_SOCKET_MINOR_
+	#endif // LLNETTOOLS_SOCKET_MAYOR_ || LLNETTOOLS_SOCKET_MINOR_
 
-#else !defined(LLANYLIB_NETTOOLS_SOCKET_HPP_)
-#define LLANYLIB_NETTOOLS_SOCKET_HPP_
-#define LLANYLIB_NETTOOLS_SOCKET_MAYOR_ 1
-#define LLANYLIB_NETTOOLS_SOCKET_MINOR_ 1
+#else !defined(LLNETTOOLS_SOCKET_HPP_)
+#define LLNETTOOLS_SOCKET_HPP_
+#define LLNETTOOLS_SOCKET_MAYOR_ 1
+#define LLNETTOOLS_SOCKET_MINOR_ 1
 
 #include "llnetlib.hpp"
 
@@ -122,4 +122,4 @@ class LL_SHARED_LIB Socket {
 } // namespace net
 } // namespace llcpp
 
-#endif // LLANYLIB_NETTOOLS_SOCKET_HPP_
+#endif // LLNETTOOLS_SOCKET_HPP_
