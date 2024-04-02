@@ -8,14 +8,14 @@
  */
 
 #if defined(LLANYLIB_NETTOOLS_SOCKET_HPP_) // Guard && version protector
-	#if LLANYLIB_NETTOOLS_SOCKET_MAYOR_ != 1 || LLANYLIB_NETTOOLS_SOCKET_MINOR_ < 0
+	#if LLANYLIB_NETTOOLS_SOCKET_MAYOR_ != 1 || LLANYLIB_NETTOOLS_SOCKET_MINOR_ < 1
 		#error "Socket.hpp version error!"
 	#endif // LLANYLIB_NETTOOLS_SOCKET_MAYOR_ || LLANYLIB_NETTOOLS_SOCKET_MINOR_
 
 #else !defined(LLANYLIB_NETTOOLS_SOCKET_HPP_)
 #define LLANYLIB_NETTOOLS_SOCKET_HPP_
 #define LLANYLIB_NETTOOLS_SOCKET_MAYOR_ 1
-#define LLANYLIB_NETTOOLS_SOCKET_MINOR_ 0
+#define LLANYLIB_NETTOOLS_SOCKET_MINOR_ 1
 
 #include "llnetlib.hpp"
 
@@ -24,13 +24,19 @@ namespace net {
 
 class LL_SHARED_LIB Socket {
 	public:
-		enum class IOStatus {
+		enum class IOStatus : ui8 {
 			NegativeTimeDiff,
 			TimeOut,
 			InternalError,
 			ErrorCannotStartNonBlockingMode,
 			Ok,
 			Unknown
+		};
+		enum class AddressResult : ui8 {
+			Ok,
+			Unknown,
+			InvalidLength,
+			OperationError
 		};
     protected:
 		ll_socket_t sock;
@@ -71,27 +77,24 @@ class LL_SHARED_LIB Socket {
 		*	So i recommend to get the signal to let the program contnue normally
 		*/
 		__LL_NODISCARD__ i64 writeBytes(const void* data, const i64 bytes) const __LL_EXCEPT__;
-		// Proxy of writeBytes()
-		__LL_NODISCARD__ i64 sendBytes(const void* data, const i64 bytes) const __LL_EXCEPT__;
-		// Reads bytes and writes into a buffer
-		__LL_NODISCARD__ i64 readBytes(void* data, const i64 bytes) const __LL_EXCEPT__;
 		/*
 		*	In unix this could lead to a signal
 		*	So i recommend to get the signal to let the program contnue normally
 		*/
 		__LL_NODISCARD__ i32 writeBytes(const void* data, const i32 bytes) const __LL_EXCEPT__;
 		// Proxy of writeBytes()
+		__LL_NODISCARD__ i64 sendBytes(const void* data, const i64 bytes) const __LL_EXCEPT__;
+		// Proxy of writeBytes()
 		__LL_NODISCARD__ i32 sendBytes(const void* data, const i32 bytes) const __LL_EXCEPT__;
+
+		// Reads bytes and writes into a buffer
+		__LL_NODISCARD__ i64 readBytes(void* data, const i64 bytes) const __LL_EXCEPT__;
 		// Reads bytes and writes into a buffer
 		__LL_NODISCARD__ i32 readBytes(void* data, const i32 bytes) const __LL_EXCEPT__;
-
-
 		// Like read bytes but with a timeout in nanoseconds
 		// If error unblocking socket, ask WSAController (only in Windows) 
 		// If error reading from socket use strerror(errno) to get error
 		__LL_NODISCARD__ IOStatus readBytes(void* data, const ui64 bytes, const ui64 timeout) const __LL_EXCEPT__;
-
-
 
 		/*
 		*	Return true if socket is in good status
@@ -100,6 +103,11 @@ class LL_SHARED_LIB Socket {
 		// Checks is opened socket has an error
 		// Do not mistake with isValidSocket()
 		__LL_NODISCARD__ ll_bool_t hasError() const __LL_EXCEPT__;
+
+		// this can throw while creating a std::string
+		__LL_NODISCARD__ ll_bool_t getAddress(std::string& str) const noexcept(false);
+		__LL_NODISCARD__ AddressResult getAddress(ll_char_t* str, const len_t length) const __LL_EXCEPT__;
+		__LL_NODISCARD__ AddressResult getAddress(ll_char_t (&str)[INET_ADDRSTRLENGHT]) const __LL_EXCEPT__;
 
 		// Clears socket and makes it invalid to use
 		// To use this socket again use: reset()

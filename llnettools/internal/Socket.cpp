@@ -61,13 +61,10 @@ void Socket::initSocket(const ProtocolType protocol_type, const NetType net_type
 	#endif
 
 	if(!this->addr) this->addr = new sockaddr_in();
-	this->addr->sin_family = magic_enum::enum_integer(protocol_type);
+	ui16 protocol = magic_enum::enum_integer(protocol_type);
+	this->addr->sin_family = protocol;
 	// Open a port
-	this->sock = socket(
-		magic_enum::enum_integer(protocol_type),
-		magic_enum::enum_integer(net_type),
-		0
-	);
+	this->sock = socket( protocol, magic_enum::enum_integer(net_type), 0);
 }
 
 Socket::Socket() __LL_EXCEPT__ : Socket(INVALID_SOCKET, LL_NULLPTR) {}
@@ -90,18 +87,17 @@ Socket& Socket::operator=(Socket&& other) __LL_EXCEPT__ {
 i64 Socket::writeBytes(const void* data, const i64 bytes) const __LL_EXCEPT__ {
 	return b64socket<ll_string_t>(this->sock, data, bytes, send);
 }
+i32 Socket::writeBytes(const void* data, const i32 bytes) const __LL_EXCEPT__ {
+	return send(this->sock, reinterpret_cast<ll_string_t>(data), bytes, 0);
+}
 i64 Socket::sendBytes(const void* data, const i64 bytes) const __LL_EXCEPT__ {
+	return this->writeBytes(data, bytes);
+}
+i32 Socket::sendBytes(const void* data, const i32 bytes) const __LL_EXCEPT__ {
 	return this->writeBytes(data, bytes);
 }
 i64 Socket::readBytes(void* data, const i64 bytes) const __LL_EXCEPT__ {
 	return b64socket<ll_char_t*>(this->sock, data, bytes, recv);
-}
-
-i32 Socket::writeBytes(const void* data, const i32 bytes) const __LL_EXCEPT__ {
-	return send(this->sock, reinterpret_cast<ll_string_t>(data), bytes, 0);
-}
-i32 Socket::sendBytes(const void* data, const i32 bytes) const __LL_EXCEPT__ {
-	return this->writeBytes(data, bytes);
 }
 i32 Socket::readBytes(void* data, const i32 bytes) const __LL_EXCEPT__ {
 	return recv(this->sock, reinterpret_cast<ll_char_t*>(data), bytes, 0);
@@ -157,7 +153,6 @@ Socket::IOStatus Socket::readBytes(void* data, const ui64 bytes, const ui64 time
 	return IOStatus::Ok;
 }
 
-
 ll_bool_t Socket::isValidSocket() const __LL_EXCEPT__ { return IS_INVALID_SOCKET(this->sock); }
 ll_bool_t Socket::hasError() const __LL_EXCEPT__ {
 	i32 error_code{};
@@ -170,6 +165,25 @@ ll_bool_t Socket::hasError() const __LL_EXCEPT__ {
 		&error_code_size
 	);
 	return error_code != 0;
+}
+
+ll_bool_t Socket::getAddress(std::string& str) const noexcept(false) {
+	str = std::string(INET_ADDRSTRLEN, '\0');
+	return inet_ntop(this->addr->sin_family, &this->addr->sin_addr, &str[0], INET_ADDRSTRLEN) != LL_NULLPTR;
+}
+Socket::AddressResult Socket::getAddress(ll_char_t* str, const len_t length) const __LL_EXCEPT__ {
+	if (length < INET_ADDRSTRLEN) return AddressResult::InvalidLength;
+	return 
+		(inet_ntop(this->addr->sin_family, &this->addr->sin_addr, str, INET_ADDRSTRLEN) != LL_NULLPTR)
+			? AddressResult::Ok
+			: AddressResult::OperationError;
+}
+Socket::AddressResult Socket::getAddress(ll_char_t(&str)[INET_ADDRSTRLENGHT]) const __LL_EXCEPT__ {
+	if (INET_ADDRSTRLENGHT < INET_ADDRSTRLEN) return AddressResult::InvalidLength;
+	return 
+		(inet_ntop(this->addr->sin_family, &this->addr->sin_addr, str, INET_ADDRSTRLEN) != LL_NULLPTR)
+			? AddressResult::Ok
+			: AddressResult::OperationError;
 }
 
 void Socket::closeSocket() __LL_EXCEPT__ {

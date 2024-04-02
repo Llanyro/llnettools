@@ -8,14 +8,14 @@
  */
 
 #if defined(LLANYLIB_NETTOOLS_NETLIB_HPP_) // Guard && version protector
-	#if LLANYLIB_NETTOOLS_NETLIB_MAYOR_ != 1 || LLANYLIB_NETTOOLS_NETLIB_MINOR_ < 0
+	#if LLANYLIB_NETTOOLS_NETLIB_MAYOR_ != 1 || LLANYLIB_NETTOOLS_NETLIB_MINOR_ < 1
 		#error "llnetlib.hpp version error!"
 	#endif // LLANYLIB_NETTOOLS_NETLIB_MAYOR_ || LLANYLIB_NETTOOLS_NETLIB_MINOR_
 
 #else !defined(LLANYLIB_NETTOOLS_NETLIB_HPP_)
 #define LLANYLIB_NETTOOLS_NETLIB_HPP_
 #define LLANYLIB_NETTOOLS_NETLIB_MAYOR_ 1
-#define LLANYLIB_NETTOOLS_NETLIB_MINOR_ 0
+#define LLANYLIB_NETTOOLS_NETLIB_MINOR_ 1
 
 #include <llanylib/definitions.hpp>
 #include <llanylib/types.hpp>
@@ -37,6 +37,7 @@ constexpr ll_socket_t INVALID_SOCKET = -1;	// Value of invalid socket
 #endif // WINDOWS_SYSTEM || POSIX_SYSTEM || UNIX_SYSTEM
 
 using in_addr_t = ui32;
+constexpr ui8 INET_ADDRSTRLENGHT = 22;
 
 enum class ProtocolType : ADDRESS_FAMILY {
 	UNSPEC       = 0,               // unspecified

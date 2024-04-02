@@ -8,14 +8,14 @@
  */
 
 #if defined(LLANYLIB_NETTOOLS_TCPSOCKET_HPP_) // Guard && version protector
-	#if LLANYLIB_NETTOOLS_TCPSOCKET_MAYOR_ != 1 || LLANYLIB_NETTOOLS_TCPSOCKET_MINOR_ < 0
+	#if LLANYLIB_NETTOOLS_TCPSOCKET_MAYOR_ != 1 || LLANYLIB_NETTOOLS_TCPSOCKET_MINOR_ < 1
 		#error "TCPSocket.hpp version error!"
 	#endif // LLANYLIB_NETTOOLS_TCPSOCKET_MAYOR_ || LLANYLIB_NETTOOLS_TCPSOCKET_MINOR_
 
 #else !defined(LLANYLIB_NETTOOLS_TCPSOCKET_HPP_)
 #define LLANYLIB_NETTOOLS_TCPSOCKET_HPP_
 #define LLANYLIB_NETTOOLS_TCPSOCKET_MAYOR_ 1
-#define LLANYLIB_NETTOOLS_TCPSOCKET_MINOR_ 0
+#define LLANYLIB_NETTOOLS_TCPSOCKET_MINOR_ 1
 
 #include "TCPSocketBase.hpp"
 
@@ -41,6 +41,7 @@ class LL_SHARED_LIB Socket : public TCPSocketBase {
 	private:
 		void move(Socket&& other) __LL_EXCEPT__;
 	public:
+		// Keeps the reference to the string does not copy it
 		Socket(ll_string_t ip, const ui16 port) __LL_EXCEPT__;
 		~Socket() __LL_EXCEPT__;
 
