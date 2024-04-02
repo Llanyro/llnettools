@@ -12,6 +12,6 @@
 
 #include "llnettools/tcp/TCPSocket.hpp"
 #include "llnettools/udp/UDPSocketBase.hpp"
-#include "llnettools/udp/Ping.hpp"
+//#include "llnettools/udp/Ping.hpp"		// WIP
 
 #endif // LLANYLIB_NETTOOLS_HPP_
