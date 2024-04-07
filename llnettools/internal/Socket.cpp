@@ -179,11 +179,12 @@ Socket::AddressResult Socket::getAddress(ll_char_t* str, const len_t length) con
 			: AddressResult::OperationError;
 }
 Socket::AddressResult Socket::getAddress(ll_char_t(&str)[INET_ADDRSTRLENGHT]) const __LL_EXCEPT__ {
-	if (INET_ADDRSTRLENGHT < INET_ADDRSTRLEN) return AddressResult::InvalidLength;
-	return 
-		(inet_ntop(this->addr->sin_family, &this->addr->sin_addr, str, INET_ADDRSTRLEN) != LL_NULLPTR)
-			? AddressResult::Ok
-			: AddressResult::OperationError;
+	if constexpr (INET_ADDRSTRLENGHT < INET_ADDRSTRLEN) return AddressResult::InvalidLength;
+	else
+		return 
+			(inet_ntop(this->addr->sin_family, &this->addr->sin_addr, str, INET_ADDRSTRLEN) != LL_NULLPTR)
+				? AddressResult::Ok
+				: AddressResult::OperationError;
 }
 
 void Socket::closeSocket() __LL_EXCEPT__ {
